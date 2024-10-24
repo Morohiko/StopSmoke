@@ -49,8 +49,15 @@ dependencies {
     implementation libs.lifecycle.runtime.ktx
     implementation libs.activity.ktx
 
-    // Testing libraries
+    // Unit Testing
     testImplementation libs.junit
-    androidTestImplementation libs.junit.v115
+    testImplementation libs.mockito.core
+    testImplementation libs.robolectric
+    testImplementation libs.core
+
+    // Android Instrumented Testing
+    androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core.v351
+    androidTestImplementation libs.runner
+    androidTestImplementation libs.rules
 }

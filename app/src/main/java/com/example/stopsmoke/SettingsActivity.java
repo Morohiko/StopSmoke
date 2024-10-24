@@ -18,11 +18,11 @@ import java.io.File;
  */
 public class SettingsActivity extends AppCompatActivity {
 
-    private EditText editTextInitialCigs;
-    private EditText editTextReductionRate;
+    EditText editTextInitialCigs;
+    EditText editTextReductionRate;
 
-    private SharedPreferences prefs;
-    private DatabaseHelper db;
+    SharedPreferences prefs;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
     /**
      * Saves the user settings from the input fields.
      */
-    private void saveSettings() {
+    void saveSettings() {
         String initialCigsStr = editTextInitialCigs.getText().toString();
         String reductionRateStr = editTextReductionRate.getText().toString();
 
@@ -122,28 +122,28 @@ public class SettingsActivity extends AppCompatActivity {
      * Clears the app's cache, deletes all cigarette logs, and stops any running timers.
      */
     private void clearCacheAndHistory() {
-        boolean cacheCleared = clearCache();
-        boolean historyCleared = clearSmokingHistory();
+        try {
+            boolean cacheCleared = clearCache();
+            boolean historyCleared = clearSmokingHistory();
 
-        if (cacheCleared && historyCleared) {
-            Toast.makeText(this, "Cache and Smoking History cleared successfully.", Toast.LENGTH_SHORT).show();
+            if (cacheCleared && historyCleared) {
+                Toast.makeText(this, "Cache and Smoking History cleared successfully.", Toast.LENGTH_SHORT).show();
+                // Reset timer-related SharedPreferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.remove("nextCigaretteTime");
+                editor.remove("lastCigaretteTime");
+                editor.putInt("smokedToday", 0);
+                editor.apply();
 
-            // Reset timer-related SharedPreferences
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.remove("nextCigaretteTime");
-            editor.remove("lastCigaretteTime");
-            editor.putInt("smokedToday", 0);
-            editor.apply();
-
-            // Notify MainActivity to stop any running timers
-            // This can be achieved by sending a broadcast or using SharedPreferences listener
-            // Here, we'll use a simple approach by restarting MainActivity if it's running
-            // Alternatively, you can implement a more robust event-based communication
-
-            Intent intent = new Intent("com.example.stopsmoke.ACTION_CLEAR_CACHE_HISTORY");
-            sendBroadcast(intent);
-        } else {
-            Toast.makeText(this, "Failed to clear Cache and/or Smoking History.", Toast.LENGTH_SHORT).show();
+                // Send broadcast to notify MainActivity
+                Intent intent = new Intent("com.example.stopsmoke.ACTION_CLEAR_CACHE_HISTORY");
+                sendBroadcast(intent);
+            } else {
+                Toast.makeText(this, "Failed to clear Cache and/or Smoking History.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "An error occurred while clearing cache and history.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -152,7 +152,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @return True if cache was cleared successfully, false otherwise.
      */
-    private boolean clearCache() {
+    boolean clearCache() {
         try {
             File cacheDir = getCacheDir();
             if (cacheDir != null && cacheDir.isDirectory()) {
@@ -170,7 +170,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @return True if history was cleared successfully, false otherwise.
      */
-    private boolean clearSmokingHistory() {
+    boolean clearSmokingHistory() {
         try {
             return db.deleteAllLogs();
         } catch (Exception e) {

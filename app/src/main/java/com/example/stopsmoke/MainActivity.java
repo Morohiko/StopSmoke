@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Default values
     private static final int DEFAULT_ALLOWED_CIGS = 20;
+    private static final int SECONDS_IN_DAY = 960; // 24 - 8(sleep) = 16 hours
 
     // Notification channel ID
     private static final String CHANNEL_ID = "timer_channel";
@@ -44,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewSmoked;
     private TextView textViewNextCigTimer;
     private Button buttonLogCigarette;
-    private Button buttonSettings;
-    private Button buttonViewProgress;
 
     // SharedPreferences and DatabaseHelper
     private SharedPreferences prefs;
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         textViewSmoked = findViewById(R.id.textViewSmoked);
         textViewNextCigTimer = findViewById(R.id.textViewNextCigTimer);
         buttonLogCigarette = findViewById(R.id.buttonLogCigarette);
-        buttonSettings = findViewById(R.id.buttonSettings);
-        buttonViewProgress = findViewById(R.id.buttonViewProgress);
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        Button buttonViewProgress = findViewById(R.id.buttonViewProgress);
 
         // Initialize SharedPreferences
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -158,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Logs a cigarette and starts the timer based on allowed cigarettes per day.
      */
+    @SuppressLint("SetTextI18n")
     private void logCigarette() {
         long currentTimeMillis = System.currentTimeMillis();
 
@@ -200,12 +200,10 @@ public class MainActivity extends AppCompatActivity {
      * @return Interval in milliseconds.
      */
     private long calculateIntervalMillis(int allowedCigsPerDay) {
-        // Total minutes in a day: 1440
-        int totalMinutes = 1440;
         if (allowedCigsPerDay <= 0) {
             allowedCigsPerDay = DEFAULT_ALLOWED_CIGS; // Prevent division by zero
         }
-        int intervalMinutes = totalMinutes / allowedCigsPerDay;
+        int intervalMinutes = SECONDS_IN_DAY / allowedCigsPerDay;
         return intervalMinutes * 60 * 1000L; // Convert to milliseconds
     }
 

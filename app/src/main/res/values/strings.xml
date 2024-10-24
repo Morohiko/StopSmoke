@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">StopSmoke</string>
+    <string name="allowed_today_20">Allowed Today: 20</string>
+    <string name="smoked_today_0">Smoked Today: 0</string>
+    <string name="next_cigarette_available_in">Next cigarette available in: --:--</string>
+    <string name="log_cigarette">Log Cigarette</string>
+    <string name="settings">Settings</string>
+    <string name="view_progress">View Progress</string>
+    <string name="smoked_0_out_of_20_cigarettes_in_the_last_4_weeks">Smoked 0 out of 20 cigarettes in the last 4 weeks.</string>
+    <string name="cigarette_logs">Cigarette Logs:</string>
+    <string name="clear_cache_and_history">Clear Cache and History</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="initial_allowed_cigarettes_per_day">Initial Allowed Cigarettes per Day</string>
+    <string name="e_g_20">e.g., 20</string>
+    <string name="reduction_rate_cigarettes_per_week">Reduction Rate (Cigarettes per Week)</string>
+    <string name="e_g_1">e.g., 1</string>
+    <string name="_2024_04_26_14_30_00">2024-04-26 14:30:00</string>
 </resources>

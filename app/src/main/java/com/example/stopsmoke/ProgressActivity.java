@@ -4,22 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ProgressActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private TextView textViewProgressDescription;
     private DatabaseHelper db;
     private CigaretteLogAdapter adapter;
+
+    private static final String PREFS_NAME = "StopSmokePrefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class ProgressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_progress);
 
         // Initialize views
-        recyclerView = findViewById(R.id.recyclerViewLogs);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewLogs);
         progressBar = findViewById(R.id.progressBar);
         textViewProgressDescription = findViewById(R.id.textViewProgressDescription);
 
@@ -43,6 +44,9 @@ public class ProgressActivity extends AppCompatActivity {
         loadLogs();
     }
 
+    /**
+     * Loads cigarette logs from the past 4 weeks and updates the UI.
+     */
     private void loadLogs() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.WEEK_OF_YEAR, -4); // Past 4 weeks
@@ -56,8 +60,13 @@ public class ProgressActivity extends AppCompatActivity {
         updateProgress();
     }
 
+    /**
+     * Updates the ProgressBar and its descriptive TextView based on user settings and logs.
+     */
+    @SuppressLint("SetTextI18n")
     private void updateProgress() {
-        SharedPreferences prefs = getSharedPreferences("StopSmokePrefs", MODE_PRIVATE);
+        // Retrieve user settings from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         int initialCigs = prefs.getInt("allowedCigarettes", 20);
         int reductionRate = prefs.getInt("reductionRate", 1);
 
@@ -67,8 +76,8 @@ public class ProgressActivity extends AppCompatActivity {
             totalAllowed += Math.max(initialCigs - (reductionRate * i), 0);
         }
 
-        // Calculate total smoked cigarettes
-        List<CigaretteLog> logs = db.getLogsBetween(getStartOfWeek(4), System.currentTimeMillis());
+        // Calculate total smoked cigarettes in the past 4 weeks
+        List<CigaretteLog> logs = db.getLogsBetween(getStartOfWeek(), System.currentTimeMillis());
         int totalSmoked = logs.size();
 
         // Update ProgressBar
@@ -76,12 +85,17 @@ public class ProgressActivity extends AppCompatActivity {
         progressBar.setProgress(totalSmoked);
 
         // Update Description
-        textViewProgressDescription.setText("Smoked " + totalSmoked + " out of " + totalAllowed + " cigarettes");
+        textViewProgressDescription.setText("Smoked " + totalSmoked + " out of " + totalAllowed + " cigarettes in the last 4 weeks.");
     }
 
-    private long getStartOfWeek(int weeksAgo) {
+    /**
+     * Calculates the start timestamp of the week, a specified number of weeks ago.
+     *
+     * @return Timestamp in milliseconds representing the start of the specified week.
+     */
+    private long getStartOfWeek() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.WEEK_OF_YEAR, -weeksAgo);
+        calendar.add(Calendar.WEEK_OF_YEAR, -4);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);

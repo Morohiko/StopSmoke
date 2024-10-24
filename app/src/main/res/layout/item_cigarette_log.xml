@@ -3,13 +3,14 @@
     android:orientation="vertical"
     android:padding="12dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content">
 
+    <!-- Timestamp TextView -->
     <TextView
-        android:id="@+id/textViewLogDate"
-        android:text="2023-10-15 14:30:00"
+        android:id="@+id/textViewLogTimestamp"
+        android:text="@string/_2024_04_26_14_30_00"
         android:textSize="16sp"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

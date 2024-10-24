@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Initial Allowed Cigarettes -->
         <TextView
-            android:text="Initial Allowed Cigarettes per Day"
+            android:text="@string/initial_allowed_cigarettes_per_day"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -18,13 +19,14 @@
         <EditText
             android:id="@+id/editTextInitialCigs"
             android:inputType="number"
-            android:hint="e.g., 20"
+            android:hint="@string/e_g_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp" />
 
+        <!-- Reduction Rate -->
         <TextView
-            android:text="Reduction Rate (Cigarettes per Week)"
+            android:text="@string/reduction_rate_cigarettes_per_week"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -32,16 +34,28 @@
         <EditText
             android:id="@+id/editTextReductionRate"
             android:inputType="number"
-            android:hint="e.g., 1"
+            android:hint="@string/e_g_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp" />
 
+        <!-- Save Settings Button -->
         <Button
             android:id="@+id/buttonSaveSettings"
-            android:text="Save Settings"
+            android:text="@string/save_settings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Clear Cache and History Button -->
+        <Button
+            android:id="@+id/buttonClearCacheHistory"
+            android:text="@string/clear_cache_and_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/design_default_color_error"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
 </ScrollView>

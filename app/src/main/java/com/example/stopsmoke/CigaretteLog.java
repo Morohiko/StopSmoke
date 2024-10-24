@@ -1,5 +1,7 @@
 package com.example.stopsmoke;
 
+import androidx.annotation.NonNull;
+
 /**
  * Represents a log entry for a smoked cigarette.
  */
@@ -76,6 +78,7 @@ public class CigaretteLog {
      *
      * @return A string containing the ID and formatted timestamp.
      */
+    @NonNull
     @Override
     public String toString() {
         return "CigaretteLog{" +

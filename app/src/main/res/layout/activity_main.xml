@@ -6,39 +6,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Allowed Cigarettes TextView -->
     <TextView
         android:id="@+id/textViewAllowed"
-        android:text="Allowed Today: 20"
+        android:text="@string/allowed_today_20"
         android:textSize="18sp"
         android:layout_marginBottom="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!-- Smoked Cigarettes TextView -->
     <TextView
         android:id="@+id/textViewSmoked"
-        android:text="Smoked Today: 0"
+        android:text="@string/smoked_today_0"
         android:textSize="18sp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!-- Timer TextView -->
+    <TextView
+        android:id="@+id/textViewNextCigTimer"
+        android:text="@string/next_cigarette_available_in"
+        android:textSize="16sp"
+        android:textColor="@color/design_default_color_error"
+        android:layout_marginBottom="32dp"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Log Cigarette Button -->
     <Button
         android:id="@+id/buttonLogCigarette"
-        android:text="Log Cigarette"
+        android:text="@string/log_cigarette"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp" />
 
+    <!-- Settings Button -->
     <Button
         android:id="@+id/buttonSettings"
-        android:text="Settings"
+        android:text="@string/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp" />
 
+    <!-- View Progress Button -->
     <Button
         android:id="@+id/buttonViewProgress"
-        android:text="View Progress"
+        android:text="@string/view_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

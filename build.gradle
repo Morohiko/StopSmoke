@@ -1,0 +1,16 @@
+// File: StopSmoke/build.gradle (Project-Level)
+
+plugins {
+    // No plugins needed here for this project
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
